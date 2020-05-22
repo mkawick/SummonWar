@@ -14,6 +14,8 @@ public class WorldScroller : MonoBehaviour
     float chunkLength = 15;
     Vector3 lastChunkPositionPlaced;
 
+    public ChestsToCollect chestMaker;
+
     [Range(1, 16)]
     public float scrollSpeed = 2.5f;
 
@@ -62,10 +64,10 @@ public class WorldScroller : MonoBehaviour
         GameObject newChunk = Instantiate(chunkModels[(int)which], this.transform);
         newChunk.transform.position = position;
         newChunk.SetActive(true);
-        /* if(obstacleManager != null)
+         if(chestMaker != null)
          {
-             obstacleManager.ChunkAdded(newChunk);
-         }*/
+             chestMaker.ChunkAdded(newChunk);
+         }
         return newChunk;
     }
     void HideAllWorkingChunks()

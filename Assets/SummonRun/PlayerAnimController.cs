@@ -7,11 +7,15 @@ public class PlayerAnimController : MonoBehaviour
     Animator animator;
     void Start()
     {
-        animator = GetComponent<Animator>();
-        animator.Play("Idle");
+        GetAnimator().Play("Idle");
     }
 
-
+    Animator GetAnimator()
+    {
+        if(animator == null)
+            animator = GetComponent<Animator>();
+        return animator;
+    }
     // Update is called once per frame
     void Update()
     {
@@ -23,14 +27,14 @@ public class PlayerAnimController : MonoBehaviour
 
     public void Walk()
     {
-        animator.Play("Walk");
+        GetAnimator().Play("Walk");
     }
     public void Run()
     {
-        animator.Play("Run");
+        GetAnimator().Play("Run");
     }
     public void Jump()
     {
-        animator.Play("f_melee_combat_run");
+        GetAnimator().Play("f_melee_combat_run");
     }
 }
