@@ -8,6 +8,8 @@ using UnityEngine;
 public class ChestsToCollect : MonoBehaviour
 {
     public WorldScroller gcm;
+    public GameObject[] rewardPrefabs;
+
     public GameObject[] obstaclePrefabs;
     public float currentDifficulty = 1;
     public Material[] matchMaterials;
@@ -22,7 +24,7 @@ public class ChestsToCollect : MonoBehaviour
     }
     void HidePrefabs()
     {
-        foreach (var p in obstaclePrefabs)
+        foreach (var p in rewardPrefabs)
         {
             p.SetActive(false);
         }
@@ -65,29 +67,46 @@ public class ChestsToCollect : MonoBehaviour
         float positionMaxX = center.x + boundsX - margin;
         float positionMinZ = center.z - boundsZ;
         float positionMaxZ = center.z + boundsZ;
+        GameObject container = GetChildWithName(chunkTransform.gameObject, "ObjectsContainer");
+
         for (int i = 0; i < numObstaclesToGenerate; i++)
         {
-            int whichObstacle = i % obstaclePrefabs.Length;
+            int whichReward = i % rewardPrefabs.Length;
+            int whichObstacle = i% obstaclePrefabs.Length;
             //float height = Random.RandomRange(1, 25);
             float height = 0.68f;
             float angle = UnityEngine.Random.Range(0, 85);
 
-            Quaternion q = obstaclePrefabs[whichObstacle].transform.rotation;
+            Quaternion q = rewardPrefabs[whichReward].transform.rotation;
             q *= Quaternion.Euler(Vector3.up * angle);
-            float x = UnityEngine.Random.Range(positionMinX, positionMaxX);
+            float x = 0;// UnityEngine.Random.Range(positionMinX, positionMaxX);
             float z = UnityEngine.Random.Range(positionMinZ, positionMaxZ);
             Vector3 pos = new Vector3(x, height, z);
 
-            GameObject container = GetChildWithName(chunkTransform.gameObject, "ObjectsContainer");
-            CreateObstacle(whichObstacle, pos, q).transform.parent = container.transform;
-            // when we delete this chunk later, all of the obstacles will go too.
-            //CreateObstacle(whichObstacle, pos, q).transform.parent = chunkTransform;
+            
+            CreateObstacle(whichReward, whichObstacle, container.transform, pos, q);
         }
-
     }
-    GameObject CreateObstacle(int which, Vector3 pos, Quaternion q)
+
+    GameObject CreateObstacle(int whichReward, int whichObstacle, Transform parent, Vector3 pos, Quaternion rotation)
     {
-        GameObject newObstacle = Instantiate(obstaclePrefabs[which], pos, q);
+        //Vector3 scale = chunk.GetComponent<MeshCollider>().bounds.size;
+       /* float obstacleHeight = obstaclePrefabs[whichObstacle].GetComponent<Collider>().bounds.size.z;
+        float rewardHeight = rewardPrefabs[whichReward].GetComponent<Collider>().bounds.size.z;
+        Vector3 obstaclePos = pos;
+        obstaclePos.z += obstacleHeight / 2;
+        pos.y += obstacleHeight + rewardHeight/2;*/
+        GameObject newObstacle = Instantiate(obstaclePrefabs[whichObstacle], pos, rotation);
+        Vector3 obstacleDimensions = newObstacle.GetComponent<Renderer>().bounds.size;
+        //newObstacle.GetComponent<Renderer>().bounds.extents.
+        //newObstacle.transform.position += new Vector3(0, obstacleDimensions.y/2, 0);
+
+        GameObject newReward = Instantiate(rewardPrefabs[whichReward], pos, rotation);
+        Vector3 rewardDimensions = newObstacle.GetComponent<Renderer>().bounds.size;
+        Vector3 rewardPos = newReward.transform.position;
+        rewardPos.y = obstacleDimensions.y;// + rewardDimensions.y / 2;
+        newReward.transform.position = rewardPos;
+
         /* ClickableObstacle obst = newObstacle.GetComponent<ClickableObstacle>();
          if (obst)
          {
@@ -95,8 +114,11 @@ public class ChestsToCollect : MonoBehaviour
              obst.RandomizeIndex();
          }*/
         newObstacle.SetActive(true);
+        newReward.SetActive(true);
 
-        
+        newObstacle.transform.parent = parent;
+        newReward.transform.parent = parent;
+
         return newObstacle;
     }
 }
