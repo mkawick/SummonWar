@@ -15,6 +15,7 @@ public class WorldScroller : MonoBehaviour
     Vector3 lastChunkPositionPlaced;
 
     public ChestsToCollect chestMaker;
+    public bool shouldScroll = true;
 
     [Range(1, 16)]
     public float scrollSpeed = 2.5f;
@@ -34,7 +35,8 @@ public class WorldScroller : MonoBehaviour
 
     void Scroll()
     {
-        transform.position -= new Vector3(0, 0, scrollSpeed * Time.deltaTime);
+        if(shouldScroll == true)
+            transform.position -= new Vector3(0, 0, scrollSpeed * Time.deltaTime);
     }
     void SetupScene()
     {

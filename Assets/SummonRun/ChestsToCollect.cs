@@ -28,6 +28,10 @@ public class ChestsToCollect : MonoBehaviour
         {
             p.SetActive(false);
         }
+        foreach (var p in obstaclePrefabs)
+        {
+            p.SetActive(false);
+        }
     }
 
     public void ChunkAdded(GameObject chunk)
@@ -90,22 +94,18 @@ public class ChestsToCollect : MonoBehaviour
 
     GameObject CreateObstacle(int whichReward, int whichObstacle, Transform parent, Vector3 pos, Quaternion rotation)
     {
-        //Vector3 scale = chunk.GetComponent<MeshCollider>().bounds.size;
-       /* float obstacleHeight = obstaclePrefabs[whichObstacle].GetComponent<Collider>().bounds.size.z;
-        float rewardHeight = rewardPrefabs[whichReward].GetComponent<Collider>().bounds.size.z;
-        Vector3 obstaclePos = pos;
-        obstaclePos.z += obstacleHeight / 2;
-        pos.y += obstacleHeight + rewardHeight/2;*/
-        GameObject newObstacle = Instantiate(obstaclePrefabs[whichObstacle], pos, rotation);
-        Vector3 obstacleDimensions = newObstacle.GetComponent<Renderer>().bounds.size;
-        //newObstacle.GetComponent<Renderer>().bounds.extents.
-        //newObstacle.transform.position += new Vector3(0, obstacleDimensions.y/2, 0);
+        //Vector3 scale = obstaclePrefabs[whichObstacle].transform.localScale;
+        Vector3 obstacleDimensions = obstaclePrefabs[whichObstacle].GetComponent<Renderer>().bounds.size;
+        Vector3 pos2 = new Vector3(pos.x, obstacleDimensions.y / 2, pos.z);
+        GameObject newObstacle = Instantiate(obstaclePrefabs[whichObstacle], pos2, rotation);
 
-        GameObject newReward = Instantiate(rewardPrefabs[whichReward], pos, rotation);
-        Vector3 rewardDimensions = newObstacle.GetComponent<Renderer>().bounds.size;
-        Vector3 rewardPos = newReward.transform.position;
-        rewardPos.y = obstacleDimensions.y;// + rewardDimensions.y / 2;
-        newReward.transform.position = rewardPos;
+
+        //Vector3 rewardSCale = rewardPrefabs[whichReward].transform.localScale;
+        Vector3 rewardDimensions = rewardPrefabs[whichReward].GetComponent<BoxCollider>().bounds.size;
+        Vector3 rewardPos = new Vector3(pos.x, obstacleDimensions.y + rewardDimensions.y / 2, pos.z);
+
+        GameObject newReward = Instantiate(rewardPrefabs[whichReward], rewardPos, rotation);
+        
 
         /* ClickableObstacle obst = newObstacle.GetComponent<ClickableObstacle>();
          if (obst)
