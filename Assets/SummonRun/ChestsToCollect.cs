@@ -17,6 +17,8 @@ public class ChestsToCollect : MonoBehaviour
 
     public bool shouldGenerateObstacles = true;
 
+    public int score = 0;
+
     void Start()
     {
         Debug.Assert(gcm != null);
@@ -105,7 +107,12 @@ public class ChestsToCollect : MonoBehaviour
         Vector3 rewardPos = new Vector3(pos.x, obstacleDimensions.y + rewardDimensions.y / 2, pos.z);
 
         GameObject newReward = Instantiate(rewardPrefabs[whichReward], rewardPos, rotation);
-        
+        var prize = newReward.GetComponent<CollectablePrize>();
+        if(prize != null)
+        {
+            prize.chestManager = this;
+        }
+
 
         /* ClickableObstacle obst = newObstacle.GetComponent<ClickableObstacle>();
          if (obst)
@@ -120,5 +127,11 @@ public class ChestsToCollect : MonoBehaviour
         newReward.transform.parent = parent;
 
         return newObstacle;
+    }
+
+    public void ChestCollected(CollectablePrize collectablePrize)
+    {
+        collectablePrize.gameObject.SetActive(false);// play effect
+        score++;
     }
 }
