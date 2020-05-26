@@ -46,6 +46,13 @@ public class WorldScroller : MonoBehaviour
 
     private void Reset()
     {
+        if (chunkList != null)
+        {
+            foreach (var chunk in chunkList)
+            {
+                Destroy(chunk);
+            }
+        }
         chunkList = new List<GameObject>();
         SetupScene();
         HideAllWorkingChunks();

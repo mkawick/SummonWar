@@ -80,7 +80,7 @@ public class BurnThePlayer : MonoBehaviour
         {
             int effectIndex = (int)(UnityEngine.Random.value * effectsForBurningPlayer.Length);
             Vector3 pos = pac.transform.position;
-            pos.y = UnityEngine.Random.value * 2;// magic number
+            pos.y = UnityEngine.Random.value * 3;// magic number
             float delay = UnityEngine.Random.value * (howLongDoesPlayerBurn / 2);
 
             DelayedEffectInstanciation dei = new DelayedEffectInstanciation();
