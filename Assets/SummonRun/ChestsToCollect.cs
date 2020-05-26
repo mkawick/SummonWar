@@ -40,9 +40,9 @@ public class ChestsToCollect : MonoBehaviour
             collectCelebration.gameObject.SetActive(false);
     }
 
-    public void ChunkAdded(GameObject chunk)
+    public void ChunkAdded(GameObject chunk, bool isFirst = false)
     {
-        if (shouldGenerateObstacles == false)
+        if (shouldGenerateObstacles == false || isFirst == true)
             return;
 
         Vector3 scale = chunk.GetComponent<MeshCollider>().bounds.size;
@@ -73,42 +73,41 @@ public class ChestsToCollect : MonoBehaviour
         var center = chunkTransform.position;
 
         float margin = 0.5f;
-        float positionMinX = center.x - boundsX + margin;
-        float positionMaxX = center.x + boundsX - margin;
+       /* float positionMinX = center.x - boundsX + margin;
+        float positionMaxX = center.x + boundsX - margin;*/
         float positionMinZ = center.z - boundsZ;
         float positionMaxZ = center.z + boundsZ;
         GameObject container = GetChildWithName(chunkTransform.gameObject, "ObjectsContainer");
 
+        float oneTenth = (positionMaxZ - positionMinZ) / 10;
+        float startingPosition = positionMinZ + oneTenth;
         for (int i = 0; i < numObstaclesToGenerate; i++)
         {
             int whichReward = i % rewardPrefabs.Length;
             int whichObstacle = i% obstaclePrefabs.Length;
-            //float height = Random.RandomRange(1, 25);
-            float height = 0.68f;
             float angle = UnityEngine.Random.Range(0, 85);
-
             Quaternion q = rewardPrefabs[whichReward].transform.rotation;
             q *= Quaternion.Euler(Vector3.up * angle);
+
             float x = 0;// UnityEngine.Random.Range(positionMinX, positionMaxX);
             float z = UnityEngine.Random.Range(positionMinZ, positionMaxZ);
-            Vector3 pos = new Vector3(x, height, z);
 
             
-            CreateObstacle(whichReward, whichObstacle, container.transform, pos, q);
+            CreateObstacle(whichReward, whichObstacle, container.transform, x, z, q);
         }
     }
 
-    GameObject CreateObstacle(int whichReward, int whichObstacle, Transform parent, Vector3 pos, Quaternion rotation)
+    GameObject CreateObstacle(int whichReward, int whichObstacle, Transform parent, float x, float z, Quaternion rotation)
     {
         //Vector3 scale = obstaclePrefabs[whichObstacle].transform.localScale;
         Vector3 obstacleDimensions = obstaclePrefabs[whichObstacle].GetComponent<Renderer>().bounds.size;
-        Vector3 pos2 = new Vector3(pos.x, obstacleDimensions.y / 2, pos.z);
+        Vector3 pos2 = new Vector3(x, obstacleDimensions.y / 2, z);
         GameObject newObstacle = Instantiate(obstaclePrefabs[whichObstacle], pos2, rotation);
 
 
         //Vector3 rewardSCale = rewardPrefabs[whichReward].transform.localScale;
         Vector3 rewardDimensions = rewardPrefabs[whichReward].GetComponent<BoxCollider>().bounds.size;
-        Vector3 rewardPos = new Vector3(pos.x, obstacleDimensions.y + rewardDimensions.y / 2, pos.z);
+        Vector3 rewardPos = new Vector3(x, obstacleDimensions.y + rewardDimensions.y / 2, z);
 
         GameObject newReward = Instantiate(rewardPrefabs[whichReward], rewardPos, rotation);
         var prize = newReward.GetComponent<CollectablePrize>();

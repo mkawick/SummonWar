@@ -121,6 +121,18 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!4 &86890143 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3840928452911805276, guid: 19e4053cd8327424c88fe278ce337d0c,
+    type: 3}
+  m_PrefabInstance: {fileID: 4599359416312464257}
+  m_PrefabAsset: {fileID: 0}
+--- !u!198 &86890145 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 3658505662892700950, guid: 19e4053cd8327424c88fe278ce337d0c,
+    type: 3}
+  m_PrefabInstance: {fileID: 4599359416312464257}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &108186792
 GameObject:
   m_ObjectHideFlags: 0
@@ -455,6 +467,7 @@ Transform:
   - {fileID: 1342379631}
   - {fileID: 1847861045}
   - {fileID: 1909740294}
+  - {fileID: 86890143}
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -472,7 +485,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   chunkModels:
   - {fileID: 1342379630}
-  numModelsIntoDistance: 2
+  numModelsIntoDistance: 16
   chestMaker: {fileID: 664259230}
   shouldScroll: 1
   scrollSpeed: 2.5
@@ -500,6 +513,7 @@ MonoBehaviour:
   matchMaterials: []
   obstacleContainer: {fileID: 0}
   shouldGenerateObstacles: 1
+  collectCelebration: {fileID: 86890145}
   score: 0
 --- !u!1 &705507993
 GameObject:
@@ -842,7 +856,7 @@ Transform:
   m_GameObject: {fileID: 1342379630}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 12}
+  m_LocalScale: {x: 1, y: 1, z: 6}
   m_Children:
   - {fileID: 2065454329}
   m_Father: {fileID: 664259228}
@@ -1555,6 +1569,75 @@ Transform:
   m_Father: {fileID: 1342379631}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &4599359416312464257
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 664259228}
+    m_Modifications:
+    - target: {fileID: 3840928452911805276, guid: 19e4053cd8327424c88fe278ce337d0c,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3840928452911805276, guid: 19e4053cd8327424c88fe278ce337d0c,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3840928452911805276, guid: 19e4053cd8327424c88fe278ce337d0c,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3840928452911805276, guid: 19e4053cd8327424c88fe278ce337d0c,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3840928452911805276, guid: 19e4053cd8327424c88fe278ce337d0c,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3840928452911805276, guid: 19e4053cd8327424c88fe278ce337d0c,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3840928452911805276, guid: 19e4053cd8327424c88fe278ce337d0c,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3840928452911805276, guid: 19e4053cd8327424c88fe278ce337d0c,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3840928452911805276, guid: 19e4053cd8327424c88fe278ce337d0c,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: 3840928452911805276, guid: 19e4053cd8327424c88fe278ce337d0c,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3840928452911805276, guid: 19e4053cd8327424c88fe278ce337d0c,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6787199951219201909, guid: 19e4053cd8327424c88fe278ce337d0c,
+        type: 3}
+      propertyPath: m_Name
+      value: CollectCelebration
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 19e4053cd8327424c88fe278ce337d0c, type: 3}
 --- !u!1001 &8726912016247758999
 PrefabInstance:
   m_ObjectHideFlags: 0

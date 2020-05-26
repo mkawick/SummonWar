@@ -43,7 +43,8 @@ public class WorldScroller : MonoBehaviour
         Vector3 position = new Vector3(0, 0, 0);
         for (int i = 0; i <= numModelsIntoDistance; i++)
         {
-            GameObject floor = AddChunkToWorld(position);
+            bool isFirst = i == 0;
+            GameObject floor = AddChunkToWorld(position, isFirst);
             chunkList.Add(floor);
             Vector3 objectSize = Vector3.Scale(floor.transform.localScale, floor.GetComponent<MeshCollider>().bounds.size);
             float length = //floor.transform.lossyScale.z;
@@ -60,7 +61,7 @@ public class WorldScroller : MonoBehaviour
         //RebuildNavMesh();
     }
 
-    GameObject AddChunkToWorld(Vector3 position)
+    GameObject AddChunkToWorld(Vector3 position, bool isFirstChunk)
     {
         float which = Random.Range(0, chunkModels.Length);
         GameObject newChunk = Instantiate(chunkModels[(int)which], this.transform);
@@ -68,7 +69,7 @@ public class WorldScroller : MonoBehaviour
         newChunk.SetActive(true);
          if(chestMaker != null)
          {
-             chestMaker.ChunkAdded(newChunk);
+             chestMaker.ChunkAdded(newChunk, isFirstChunk);
          }
         return newChunk;
     }
@@ -96,7 +97,7 @@ public class WorldScroller : MonoBehaviour
         {
             Vector3 v = lastChunkPositionPlaced;
             //v.z += ;
-            GameObject floor = AddChunkToWorld(v);
+            GameObject floor = AddChunkToWorld(v, false);
             chunkList.Add(floor);
 
             MoveTheLastChunkTrackingForward();
