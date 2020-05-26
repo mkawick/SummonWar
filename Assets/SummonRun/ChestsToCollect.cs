@@ -16,6 +16,8 @@ public class ChestsToCollect : MonoBehaviour
     public GameObject obstacleContainer;
 
     public bool shouldGenerateObstacles = true;
+    [SerializeField]
+    ParticleSystem collectCelebration;
 
     public int score = 0;
 
@@ -34,6 +36,8 @@ public class ChestsToCollect : MonoBehaviour
         {
             p.SetActive(false);
         }
+        if (collectCelebration)
+            collectCelebration.gameObject.SetActive(false);
     }
 
     public void ChunkAdded(GameObject chunk)
@@ -132,6 +136,11 @@ public class ChestsToCollect : MonoBehaviour
     public void ChestCollected(CollectablePrize collectablePrize)
     {
         collectablePrize.gameObject.SetActive(false);// play effect
+        ParticleSystem ps = Instantiate(collectCelebration, collectablePrize.transform.position, Quaternion.identity);
+        
+        ps.transform.parent = collectablePrize.transform.parent;// this is the level
+        ps.gameObject.SetActive(true);
+        Destroy(ps, 3);
         score++;
     }
 }
