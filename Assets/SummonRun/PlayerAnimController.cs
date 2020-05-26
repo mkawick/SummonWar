@@ -5,9 +5,16 @@ using UnityEngine;
 public class PlayerAnimController : MonoBehaviour
 {
     Animator animator;
+    Vector3 originalPlayerPosition;
     void Start()
     {
         GetAnimator().Play("Idle");
+        originalPlayerPosition = transform.position;
+    }
+
+    public void ResetPlayerState()
+    {
+        transform.position = originalPlayerPosition;
     }
 
     Animator GetAnimator()

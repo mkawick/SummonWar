@@ -5,34 +5,43 @@ using UnityEngine;
 public class WorldScroller : MonoBehaviour
 {
     //GameObject scrollingTrack;
+    [Header("Prefabs")]
     public GameObject[] chunkModels;
     List<GameObject> chunkList;
+    
+
+    [SerializeField]
+    PlayerAnimController player;
+    [SerializeField]
+    ChestsToCollect chestMaker;
+
     //public NavMeshSurface navMeshSurface;
-    public int numModelsIntoDistance = 2;
-    float playerZ = 0;
+    public int numTrackChunksIntoDistance = 2;
     float distanceBeforeCreatingNewChunk = 45;
+
+    float playerZ = 0;
     float chunkLength = 15;
     Vector3 lastChunkPositionPlaced;
-
-    public ChestsToCollect chestMaker;
-    public bool shouldScroll = true;
-    public bool shouldFlamesScroll = true;
     bool waitingToReset = false;
     float resetTimeout = 0;
 
+    [Header("Config")]
+    public bool shouldScroll = true;
+    public bool shouldFlamesScroll = true;
     [Range(1, 16)]
     public float scrollSpeed = 2.5f;
 
     [Range(1, 5)]
     public float flameScrollSpeed = 2.5f;
 
+    [Header("Flames")]
     public Transform flameCube;
-    public Vector3 flameCubeOriginalPosition;
+    Vector3 flameCubeOriginalPosition;
 
     void Start()
     {
-        Reset();
         flameCubeOriginalPosition = flameCube.position;
+        Reset();
     }
 
     private void Reset()
@@ -51,7 +60,9 @@ public class WorldScroller : MonoBehaviour
             if(resetTimeout < Time.time)
             {
                 Reset();
+                player.ResetPlayerState();
                 waitingToReset = false;
+                shouldScroll = true;
             }
         }
         else 
@@ -77,7 +88,7 @@ public class WorldScroller : MonoBehaviour
     void SetupScene()
     {
         Vector3 position = new Vector3(0, 0, -6);
-        for (int i = 0; i <= numModelsIntoDistance; i++)
+        for (int i = 0; i <= numTrackChunksIntoDistance; i++)
         {
             bool isFirst = i == 0;
             GameObject floor = AddChunkToWorld(position, isFirst);
