@@ -16,9 +16,15 @@ public class WorldScroller : MonoBehaviour
 
     public ChestsToCollect chestMaker;
     public bool shouldScroll = true;
+    public bool shouldFlamesScroll = true;
 
     [Range(1, 16)]
     public float scrollSpeed = 2.5f;
+
+    [Range(1, 5)]
+    public float flameScrollSpeed = 2.5f;
+
+    public Transform flameCube;
 
     void Start()
     {
@@ -37,10 +43,18 @@ public class WorldScroller : MonoBehaviour
     {
         if(shouldScroll == true)
             transform.position -= new Vector3(0, 0, scrollSpeed * Time.deltaTime);
+
+        if(shouldFlamesScroll == true )
+        {
+            if(flameCube != null)
+            {
+                flameCube.position += new Vector3(0, 0, flameScrollSpeed * Time.deltaTime);
+            }
+        }
     }
     void SetupScene()
     {
-        Vector3 position = new Vector3(0, 0, 0);
+        Vector3 position = new Vector3(0, 0, -6);
         for (int i = 0; i <= numModelsIntoDistance; i++)
         {
             bool isFirst = i == 0;
