@@ -17,6 +17,8 @@ public class WorldScroller : MonoBehaviour
     public ChestsToCollect chestMaker;
     public bool shouldScroll = true;
     public bool shouldFlamesScroll = true;
+    bool waitingToReset = false;
+    float resetTimeout = 0;
 
     [Range(1, 16)]
     public float scrollSpeed = 2.5f;
@@ -25,18 +27,38 @@ public class WorldScroller : MonoBehaviour
     public float flameScrollSpeed = 2.5f;
 
     public Transform flameCube;
+    public Vector3 flameCubeOriginalPosition;
 
     void Start()
+    {
+        Reset();
+        flameCubeOriginalPosition = flameCube.position;
+    }
+
+    private void Reset()
     {
         chunkList = new List<GameObject>();
         SetupScene();
         HideAllWorkingChunks();
+        flameCube.position = flameCubeOriginalPosition;
     }
 
     // Update is called once per frame
     void Update()
     {
-        Scroll();
+        if(waitingToReset == true)
+        {
+            if(resetTimeout < Time.time)
+            {
+                Reset();
+                waitingToReset = false;
+            }
+        }
+        else 
+        {
+            Scroll();
+        }
+        
     }
 
     void Scroll()
@@ -44,7 +66,7 @@ public class WorldScroller : MonoBehaviour
         if(shouldScroll == true)
             transform.position -= new Vector3(0, 0, scrollSpeed * Time.deltaTime);
 
-        if(shouldFlamesScroll == true )
+        if(shouldFlamesScroll == true)
         {
             if(flameCube != null)
             {
@@ -124,5 +146,12 @@ public class WorldScroller : MonoBehaviour
     {
         lastChunkPositionPlaced = chunkList[chunkList.Count - 1].transform.position;
         lastChunkPositionPlaced.z += chunkLength;
+    }
+
+    public void PlayerIsBurning(float waitTimeForBurning)
+    {
+        shouldScroll = false;
+        waitingToReset = true;
+        resetTimeout = Time.time + waitTimeForBurning;
     }
 }
