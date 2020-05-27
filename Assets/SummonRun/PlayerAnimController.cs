@@ -48,7 +48,6 @@ public class PlayerAnimController : MonoBehaviour
                 if(transform.position.z != originalPlayerPosition.z)
                 {
                     float currentZ = transform.position.z;
-                    //Vector3 temp = originalPlayerPosition.z;
                     float dist = maximumPlayerRunningPosition.position.z - currentZ;
                     if(dist<0.01f)
                     {

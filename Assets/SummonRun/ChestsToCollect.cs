@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TMPro;
 using UnityEngine;
 
 public class ChestsToCollect : MonoBehaviour
@@ -13,11 +14,13 @@ public class ChestsToCollect : MonoBehaviour
     public GameObject[] rewardPrefabs;
     public GameObject[] obstaclePrefabs;
     public Material[] matchMaterials;
-    public GameObject obstacleContainer;
+    //GameObject obstacleContainer;
 
     [Header("settings and references")]
     [SerializeField]
     ParticleSystem collectCelebration;
+    [SerializeField]
+    TextMeshProUGUI text;
     public PlayerAnimController playerAnimController;
     public float currentDifficulty = 1;
     public int score = 0;
@@ -28,6 +31,13 @@ public class ChestsToCollect : MonoBehaviour
     {
         Debug.Assert(gcm != null);
         HidePrefabs();
+        ResetGame();
+    }
+
+    public void ResetGame()
+    {
+        score = 0;
+        UpdateScoreText();
     }
     void HidePrefabs()
     {
@@ -146,5 +156,14 @@ public class ChestsToCollect : MonoBehaviour
 
         playerAnimController.SpeedUp(0.5f);
         score++;
+        UpdateScoreText();
+    }
+
+    void UpdateScoreText()
+    {
+        if(text)
+        {
+            text.SetText("Score: " + score);
+        }
     }
 }
