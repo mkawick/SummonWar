@@ -6,6 +6,8 @@ public class PlayerAnimController : MonoBehaviour
 {
     Animator animator;
     Vector3 originalPlayerPosition;
+    float speedyTimeToSlowDown = 0;
+    public float animSpeedWhileSpeedRunning = 2;
     void Start()
     {
         GetAnimator().Play("Idle");
@@ -15,6 +17,7 @@ public class PlayerAnimController : MonoBehaviour
     public void ResetPlayerState()
     {
         transform.position = originalPlayerPosition;
+        Run();
     }
 
     Animator GetAnimator()
@@ -26,10 +29,18 @@ public class PlayerAnimController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-       /* if(Input.GetKeyUp(KeyCode.Space))
+        if(speedyTimeToSlowDown != 0)
         {
-            animator.Play("Walk");
-        }*/
+            if(speedyTimeToSlowDown<Time.time)
+            {
+                GetAnimator().speed = 1;
+                speedyTimeToSlowDown = 0;
+            }
+        }
+    }
+    public void Idle()
+    {
+        GetAnimator().Play("Idle");
     }
 
     public void Walk()
@@ -39,7 +50,15 @@ public class PlayerAnimController : MonoBehaviour
     public void Run()
     {
         GetAnimator().Play("Run");
+        //GetAnimator().speed = 2;
     }
+
+    public void SpeedUp(float runTime)
+    {
+        GetAnimator().speed = animSpeedWhileSpeedRunning;
+        speedyTimeToSlowDown = Time.time + runTime;
+    }
+
     public void Jump()
     {
         GetAnimator().Play("f_melee_combat_run");

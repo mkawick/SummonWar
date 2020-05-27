@@ -19,13 +19,27 @@ public class BurnThePlayer : MonoBehaviour
     }
 
     List<DelayedEffectInstanciation> pendingEffects;
+    PlayerAnimController player;
     bool areWeBurningThePlayer = false;
     float timeToReset = 0;
+    Vector3 originalCameraPosition;
+    Quaternion originalCameraRotation;
+    Camera currentCamera;
 
     //-----------------------------------------------------------
     void Start()
     {
         pendingEffects = new List<DelayedEffectInstanciation>();
+        foreach( var camera in Camera.allCameras)
+        {
+            if(camera.isActiveAndEnabled == true)
+            {
+                currentCamera = camera;
+                break;
+            }
+        }
+        originalCameraPosition = currentCamera.transform.position;
+        originalCameraRotation = currentCamera.transform.rotation;
     }
 
     // Update is called once per frame
@@ -38,6 +52,9 @@ public class BurnThePlayer : MonoBehaviour
                 timeToReset = 0;
                 pendingEffects = new List<DelayedEffectInstanciation>();
                 areWeBurningThePlayer = false;
+
+                currentCamera.transform.position = originalCameraPosition;
+                currentCamera.transform.rotation = originalCameraRotation;
             }
             else
             {
@@ -71,7 +88,10 @@ public class BurnThePlayer : MonoBehaviour
             worldScroller.PlayerIsBurning(howLongDoesPlayerBurn);
             // spawn effects on player that expire after a set time
 
-            AddDelayedEffectsToPlayer(pac);
+            player = pac;
+            SetupCameraMovement(player.transform.position);
+            AddDelayedEffectsToPlayer(player);
+            player.Idle();
             var burn = other.GetComponent<BurningEffect>();
             burn.StartBurn();
         }
@@ -95,5 +115,16 @@ public class BurnThePlayer : MonoBehaviour
 
             pendingEffects.Add(dei);
         }
+    }
+
+    void SetupCameraMovement(Vector3 moveTowardPosition)
+    {
+        Vector3 ray = (moveTowardPosition - currentCamera.transform.position);
+        float len = ray.magnitude;
+        ray.Normalize();
+        ray *= (len * 0.8f);
+        Vector3 destination = currentCamera.transform.position + ray;
+        float zoomFaster = howLongDoesPlayerBurn * 0.9f;
+        iTween.MoveTo(currentCamera.gameObject, destination, zoomFaster);
     }
 }
