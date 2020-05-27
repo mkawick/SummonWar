@@ -9,6 +9,8 @@ public class PlayerAnimController : MonoBehaviour
     float speedyTimeToSlowDown = 0;
     public float animSpeedWhileSpeedRunning = 2;
     bool playerIsPaused = false;
+
+    public float quickRunGroundSpeed = 1;
     void Start()
     {
         GetAnimator().Play("Idle");
@@ -37,6 +39,25 @@ public class PlayerAnimController : MonoBehaviour
             {
                 GetAnimator().speed = 1;
                 speedyTimeToSlowDown = 0;
+            }
+            else
+            {
+                if(transform.position.z != originalPlayerPosition.z)
+                {
+                    float currentZ = transform.position.z;
+                    //Vector3 temp = originalPlayerPosition.z;
+                    float dist = originalPlayerPosition.z - currentZ;
+                    if(dist<0.01f)
+                    {
+                        transform.position = originalPlayerPosition;
+                    }
+                    else
+                    {
+                        Vector3 diff = originalPlayerPosition - transform.position;
+                        diff *= (quickRunGroundSpeed * Time.deltaTime);
+                        transform.position += diff;
+                    }
+                }
             }
         }
     }

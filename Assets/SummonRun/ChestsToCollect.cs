@@ -8,18 +8,21 @@ using UnityEngine;
 public class ChestsToCollect : MonoBehaviour
 {
     public WorldScroller gcm;
-    public GameObject[] rewardPrefabs;
 
+    [Header("Prefabs")]
+    public GameObject[] rewardPrefabs;
     public GameObject[] obstaclePrefabs;
-    public float currentDifficulty = 1;
     public Material[] matchMaterials;
     public GameObject obstacleContainer;
 
-    public bool shouldGenerateObstacles = true;
+    [Header("settings and references")]
     [SerializeField]
     ParticleSystem collectCelebration;
-
+    public PlayerAnimController playerAnimController;
+    public float currentDifficulty = 1;
     public int score = 0;
+
+    public bool shouldGenerateObstacles = true;
 
     void Start()
     {
@@ -140,6 +143,8 @@ public class ChestsToCollect : MonoBehaviour
         ps.transform.parent = collectablePrize.transform.parent;// this is the level
         ps.gameObject.SetActive(true);
         Destroy(ps, 3);
+
+        playerAnimController.SpeedUp(0.5f);
         score++;
     }
 }
