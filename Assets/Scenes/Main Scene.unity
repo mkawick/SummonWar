@@ -7189,6 +7189,11 @@ PrefabInstance:
       propertyPath: m_Center.y
       value: 0.9404205
       objectReference: {fileID: 0}
+    - target: {fileID: 8726912014756209290, guid: 1881ebf2e6ab57245a1edc85be8c9e61,
+        type: 3}
+      propertyPath: maximumPlayerRunningPosition
+      value: 
+      objectReference: {fileID: 2044733375}
     - target: {fileID: 8726912014756209335, guid: 1881ebf2e6ab57245a1edc85be8c9e61,
         type: 3}
       propertyPath: m_Constraints

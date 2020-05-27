@@ -6,6 +6,8 @@ public class PlayerAnimController : MonoBehaviour
 {
     Animator animator;
     Vector3 originalPlayerPosition;
+    public Transform maximumPlayerRunningPosition;
+    //Vector3 maximumPlayerPosition;
     float speedyTimeToSlowDown = 0;
     public float animSpeedWhileSpeedRunning = 2;
     bool playerIsPaused = false;
@@ -15,6 +17,7 @@ public class PlayerAnimController : MonoBehaviour
     {
         GetAnimator().Play("Idle");
         originalPlayerPosition = transform.position;
+        //maximumPlayerPosition = maximumPlayerRunningPosition.position;
     }
 
     public void ResetPlayerState()
@@ -46,14 +49,14 @@ public class PlayerAnimController : MonoBehaviour
                 {
                     float currentZ = transform.position.z;
                     //Vector3 temp = originalPlayerPosition.z;
-                    float dist = originalPlayerPosition.z - currentZ;
+                    float dist = maximumPlayerRunningPosition.position.z - currentZ;
                     if(dist<0.01f)
                     {
-                        transform.position = originalPlayerPosition;
+                        transform.position = maximumPlayerRunningPosition.position;
                     }
                     else
                     {
-                        Vector3 diff = originalPlayerPosition - transform.position;
+                        Vector3 diff = maximumPlayerRunningPosition.position - transform.position;
                         diff *= (quickRunGroundSpeed * Time.deltaTime);
                         transform.position += diff;
                     }
