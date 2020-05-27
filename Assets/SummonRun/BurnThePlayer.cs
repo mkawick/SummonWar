@@ -10,6 +10,7 @@ public class BurnThePlayer : MonoBehaviour
     public ParticleSystem[] effectsForBurningPlayer;
     public float howLongDoesPlayerBurn = 5;
     public float numBurningEffectsToSpawn = 3;
+
     struct DelayedEffectInstanciation
     {
         public Vector3 position;
@@ -51,8 +52,10 @@ public class BurnThePlayer : MonoBehaviour
         {
             if(effect.timeToSpawn < Time.time)
             {
-                Instantiate(effectsForBurningPlayer[effect.effectIndex], effect.position, Quaternion.identity);
+                var newEffect = Instantiate(effectsForBurningPlayer[effect.effectIndex], effect.position, Quaternion.identity);
                 pendingEffects.Remove(effect);
+                float length = timeToReset - Time.time;
+                Destroy(newEffect, length);
                 return;
             }
         }
@@ -69,6 +72,8 @@ public class BurnThePlayer : MonoBehaviour
             // spawn effects on player that expire after a set time
 
             AddDelayedEffectsToPlayer(pac);
+            var burn = other.GetComponent<BurningEffect>();
+            burn.StartBurn();
         }
     }
 
