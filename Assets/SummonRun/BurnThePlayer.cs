@@ -89,10 +89,12 @@ public class BurnThePlayer : MonoBehaviour
             // spawn effects on player that expire after a set time
 
             player = pac;
-            SetupCameraMovement(player.transform.position);
+            var burn = other.GetComponent<BurningEffect>();
+
+            SetupCameraMovement(burn.cameraZoomSpot.position);
             AddDelayedEffectsToPlayer(player);
             player.PlayerIsDying();
-            var burn = other.GetComponent<BurningEffect>();
+            
             burn.StartBurn();
         }
     }

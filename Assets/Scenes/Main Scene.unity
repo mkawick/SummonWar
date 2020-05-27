@@ -6897,6 +6897,12 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 8726912016247758999}
   m_PrefabAsset: {fileID: 0}
+--- !u!4 &1845050874 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8726912016255862611, guid: 1881ebf2e6ab57245a1edc85be8c9e61,
+    type: 3}
+  m_PrefabInstance: {fileID: 8726912016247758999}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &1845050875
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6911,6 +6917,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   burnDelay: 2
   burnTime: 3
+  cameraZoomSpot: {fileID: 2031944554}
 --- !u!1 &1847861044
 GameObject:
   m_ObjectHideFlags: 0
@@ -6989,6 +6996,36 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 556596821}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &2031944553
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2031944554}
+  m_Layer: 9
+  m_Name: CameraZoomSpot
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2031944554
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2031944553}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.97, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1845050874}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &2061198244
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -110,7 +110,7 @@ public class WorldScroller : MonoBehaviour
         lastChunkPositionPlaced = position;
 
         chunkLength = chunkModels[0].transform.lossyScale.z;// todo, generalize this
-        Debug.Log("chunk length: " + chunkLength);
+        //Debug.Log("chunk length: " + chunkLength);
 
         //RebuildNavMesh();
     }

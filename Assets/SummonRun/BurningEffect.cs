@@ -9,6 +9,9 @@ public class BurningEffect : MonoBehaviour
     bool isBurning;
     float percentage = 0;
     float burnDelayStart = 0;
+
+    public Transform cameraZoomSpot;
+
     void Start()
     {
         
