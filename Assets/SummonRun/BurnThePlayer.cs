@@ -91,7 +91,7 @@ public class BurnThePlayer : MonoBehaviour
             player = pac;
             SetupCameraMovement(player.transform.position);
             AddDelayedEffectsToPlayer(player);
-            player.Idle();
+            player.PlayerIsDying();
             var burn = other.GetComponent<BurningEffect>();
             burn.StartBurn();
         }

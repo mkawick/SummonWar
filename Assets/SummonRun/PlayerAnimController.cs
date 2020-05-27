@@ -8,6 +8,7 @@ public class PlayerAnimController : MonoBehaviour
     Vector3 originalPlayerPosition;
     float speedyTimeToSlowDown = 0;
     public float animSpeedWhileSpeedRunning = 2;
+    bool playerIsPaused = false;
     void Start()
     {
         GetAnimator().Play("Idle");
@@ -17,7 +18,8 @@ public class PlayerAnimController : MonoBehaviour
     public void ResetPlayerState()
     {
         transform.position = originalPlayerPosition;
-        Run();
+        playerIsPaused = false;
+        //Run();
     }
 
     Animator GetAnimator()
@@ -40,17 +42,32 @@ public class PlayerAnimController : MonoBehaviour
     }
     public void Idle()
     {
+        if (playerIsPaused == true)
+            return;
+
         GetAnimator().Play("Idle");
     }
 
     public void Walk()
     {
+        if (playerIsPaused == true)
+            return;
+
         GetAnimator().Play("Walk");
     }
     public void Run()
     {
+        if (playerIsPaused == true)
+            return;
+
         GetAnimator().Play("Run");
         //GetAnimator().speed = 2;
+    }
+
+    public void PlayerIsDying()
+    {
+        Idle();
+        playerIsPaused = true;
     }
 
     public void SpeedUp(float runTime)
